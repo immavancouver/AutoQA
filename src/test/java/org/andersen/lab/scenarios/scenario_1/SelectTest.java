@@ -15,7 +15,6 @@ public class SelectTest extends BaseTest {
 
 	@Test
 	public void testSelectFormScenario() {
-		// Step 1: Login
 		driver.get(Links.ANDERSEN_LOGIN.getLink());
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.enterEmail("registrarfocean@gmail.com");

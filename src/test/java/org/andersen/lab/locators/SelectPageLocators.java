@@ -47,4 +47,5 @@ public class SelectPageLocators {
 			return value;
 		}
 	}
+
 }

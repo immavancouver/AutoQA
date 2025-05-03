@@ -13,7 +13,6 @@ public class ActionsAlertsIframesPage {
 	private WebDriverWait wait;
 	private Actions actions;
 
-
 	public ActionsAlertsIframesPage(WebDriver driver){
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, java.time.Duration.ofSeconds(10));
@@ -61,5 +60,4 @@ public class ActionsAlertsIframesPage {
 	public String getResultMessage() {
 		return driver.findElement(ActionsAlertsIframesLocators.RESULT_MESSAGE).getText();
 	}
-
 }

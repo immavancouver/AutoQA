@@ -37,7 +37,6 @@ public class SelectPage {
 		selectFromDropdown(SelectPageLocators.TYPE_DROPDOWN, option);
 	}
 
-	// Fill start and end dates dynamically
 	public String calculateNextMonday() {
 		LocalDate nextMonday = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
 		return formatDate(nextMonday);
@@ -81,17 +80,14 @@ public class SelectPage {
 		}
 	}
 
-	// Submit form
 	public void clickSearchButton() {
 		wait.until(ExpectedConditions.elementToBeClickable(SelectPageLocators.SEARCH_BUTTON)).click();
 	}
 
-	// Get error message text
 	public String getErrorMessage() {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(SelectPageLocators.ERROR_MESSAGE)).getText();
 	}
 
-	// Helper method to select from dropdown
 	private void selectFromDropdown(By locator, String option) {
 		Select select = new Select(wait.until(ExpectedConditions.visibilityOfElementLocated(locator)));
 		select.selectByVisibleText(option);

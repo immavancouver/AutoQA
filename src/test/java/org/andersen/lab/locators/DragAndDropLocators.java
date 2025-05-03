@@ -15,5 +15,4 @@ public class DragAndDropLocators {
 	public static final By AUTOMATION_WORK_CELL_2 = By.id("target-auto2");
 	public static final By FINISH_BUTTON = By.xpath("//button[text()='Finish']");
 
-
 }

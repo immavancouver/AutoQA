@@ -31,14 +31,4 @@ public class LoginPage {
 		WebElement signInButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
 		signInButton.click();
 	}
-
-	public boolean isProfilePageLoaded() {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-			return wait.until(ExpectedConditions.urlContains(".com"));
-		} catch (Exception e) {
-			System.out.println("Failed to load profile page. Current URL: " + driver.getCurrentUrl());
-			return false;
-		}
-	}
 }
