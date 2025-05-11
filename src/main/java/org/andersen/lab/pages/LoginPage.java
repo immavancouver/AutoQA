@@ -22,19 +22,19 @@ public class LoginPage {
 	}
 
 	@FindBy(name = "email")
-	private static WebElement email;
+	private WebElement email;
 
 	@FindBy(name = "password")
-	private static WebElement password;
+	private WebElement password;
 
 	@FindBy(css = "button[type='submit']")
-	private static WebElement signInButton;
+	private WebElement signInButton;
 
 	@FindBy(xpath = "//span[text()='Email or password is not valid']")
-	private static WebElement invalidEmailOrPasswordErrorMessage;
+	private WebElement invalidEmailOrPasswordErrorMessage;
 
 	@FindBy(xpath = "//span[text()='Required']")
-	private static WebElement requiredFieldErrorMessage;
+	private WebElement requiredFieldErrorMessage;
 
 	public LoginPage openLoginPage() {
 		driver.get(Links.ANDERSEN_LOGIN.getLink());

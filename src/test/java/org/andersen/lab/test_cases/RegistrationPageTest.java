@@ -28,7 +28,7 @@ public class RegistrationPageTest {
 	}
 
 	@Test
-	public void RegistrationWithValidInputs() {
+	public void registrationWithValidInputs() {
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
@@ -41,7 +41,7 @@ public class RegistrationPageTest {
 	}
 
 	@Test
-	public void RegistrationWithMissingFields() {
+	public void registrationWithMissingFields() {
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("")
@@ -52,7 +52,7 @@ public class RegistrationPageTest {
 	}
 
 	@Test
-	public void RegistrationWithInvalidEmail() {
+	public void registrationWithInvalidEmail() {
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
@@ -65,7 +65,7 @@ public class RegistrationPageTest {
 	}
 
 	@Test
-	public void RegistrationWithMismatchedPasswords() {
+	public void registrationWithMismatchedPasswords() {
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
@@ -78,7 +78,7 @@ public class RegistrationPageTest {
 	}
 
 	@Test
-	public void RegistrationWithRegisteredEmail() {
+	public void registrationWithRegisteredEmail() {
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")

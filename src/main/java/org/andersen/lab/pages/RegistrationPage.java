@@ -25,37 +25,37 @@ public class RegistrationPage {
 	private static WebDriverWait wait;
 
 	@FindBy(name = "email")
-	private static WebElement email;
+	private WebElement email;
 
 	@FindBy(name = "firstName")
-	private static WebElement firstName;
+	private WebElement firstName;
 
 	@FindBy(name = "lastName")
-	private static WebElement lastName;
+	private WebElement lastName;
 
 	@FindBy(name = "dateOfBirth")
-	private static WebElement dateOfBirth;
+	private WebElement dateOfBirth;
 
 	@FindBy(name = "password")
-	private static WebElement password;
+	private WebElement password;
 
 	@FindBy(name = "passwordConfirmation")
-	private static WebElement passwordConfirmation;
+	private WebElement passwordConfirmation;
 
 	@FindBy(xpath = "//button[@type='submit']")
-	private static WebElement submitButton;
+	private WebElement submitButton;
 
 	@FindBy(xpath = "//span[text()='Required']")
-	private static WebElement requiredFieldErrorMessage;
+	private WebElement requiredFieldErrorMessage;
 
 	@FindBy(xpath = "//span[text()='Invalid email address']")
-	private static WebElement invalidEmailErrorMessage;
+	private WebElement invalidEmailErrorMessage;
 
 	@FindBy(xpath = "//span[text()='Passwords must match']")
-	private static WebElement mismatchedPasswordsErrorMessage;
+	private WebElement mismatchedPasswordsErrorMessage;
 
 	@FindBy(xpath = "//span[text()='This email address is  already in use']")
-	private static WebElement registeredEmailErrorMessage;
+	private WebElement registeredEmailErrorMessage;
 
 	public RegistrationPage openRegistrationPage() {
 		driver.get(Links.ANDERSEN_REGISTRATION.getLink());

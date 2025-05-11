@@ -28,7 +28,7 @@ public class LoginPageTest {
 	}
 
 	@Test
-	public void SignInWithValidInputs() {
+	public void signInWithValidInputs() {
 		loginPage
 				.openLoginPage()
 				.setEmail("registrarfocean@gmail.com")
@@ -37,7 +37,7 @@ public class LoginPageTest {
 	}
 
 	@Test
-	public void SignInWithInvalidPassword() {
+	public void signInWithInvalidPassword() {
 		loginPage
 				.openLoginPage()
 				.setEmail("registrarfocean@gmail.com")
@@ -47,7 +47,7 @@ public class LoginPageTest {
 	}
 
 	@Test
-	public void SignInWithNonExistingEmail() {
+	public void signInWithNonExistingEmail() {
 		loginPage
 				.openLoginPage()
 				.setEmail("registrarean@gmail.com")
@@ -57,7 +57,7 @@ public class LoginPageTest {
 	}
 
 	@Test
-	public void SignInWithEmptyFields() {
+	public void signInWithEmptyFields() {
 		loginPage
 				.openLoginPage()
 				.setEmail("")
@@ -67,7 +67,7 @@ public class LoginPageTest {
 	}
 
 	@Test
-	public void SignInWithCaseSensitiveEmail() {
+	public void signInWithCaseSensitiveEmail() {
 		loginPage
 				.openLoginPage()
 				.setEmail("Registrarfocean@gmail.com")
