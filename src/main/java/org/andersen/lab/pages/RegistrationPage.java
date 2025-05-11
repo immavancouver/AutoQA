@@ -1,5 +1,6 @@
 package org.andersen.lab.pages;
 
+import io.qameta.allure.Step;
 import org.andersen.lab.utils.links.Links;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -57,47 +58,56 @@ public class RegistrationPage {
 	@FindBy(xpath = "//span[text()='This email address is  already in use']")
 	private WebElement registeredEmailErrorMessage;
 
+	@Step("Opening Registration Page")
 	public RegistrationPage openRegistrationPage() {
 		driver.get(Links.ANDERSEN_REGISTRATION.getLink());
 		return this;
 	}
 
+	@Step("Setting user's password")
 	public RegistrationPage setPassword(String value) {
 		sendKeys(password, value);
 		return this;
 	}
 
+	@Step("Setting user's email address")
 	public RegistrationPage setEmail(String value) {
 		sendKeys(email, value);
 		return this;
 	}
 
+	@Step("Setting user's confirmation password")
 	public RegistrationPage setConfirmationPassword(String value) {
 		sendKeys(passwordConfirmation, value);
 		return this;
 	}
 
+	@Step("Setting user's first name")
 	public RegistrationPage setFirstName(String value) {
 		sendKeys(firstName, value);
 		return this;
 	}
 
+	@Step("Setting user's last name")
 	public RegistrationPage setLastName(String value) {
 		sendKeys(lastName, value);
 		return this;
 	}
 
+	@Step("Setting user's date of birth")
 	public RegistrationPage setDateOfBirth(String value) {
 		sendKeys(dateOfBirth, value);
 		return this;
 	}
 
+	@Step("Clicking on submit button")
 	public RegistrationPage clickOnSubmitButton() {
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", submitButton);
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public RegistrationPage checkRequiredFieldErrorMessage() {
 		String expectedAlertMessage = "Required";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(requiredFieldErrorMessage)).getText();
@@ -105,6 +115,7 @@ public class RegistrationPage {
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public RegistrationPage checkInvalidEmailErrorMessage() {
 		String expectedAlertMessage = "Invalid email address";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(invalidEmailErrorMessage)).getText();
@@ -112,6 +123,7 @@ public class RegistrationPage {
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public RegistrationPage checkMismatchedPasswordsErrorMessage() {
 		String expectedAlertMessage = "Passwords must match";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(mismatchedPasswordsErrorMessage)).getText();
@@ -119,6 +131,7 @@ public class RegistrationPage {
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public RegistrationPage checkRegisteredEmailErrorMessage() {
 		String expectedAlertMessage = "This email address is already in use";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(registeredEmailErrorMessage)).getText();
@@ -126,9 +139,8 @@ public class RegistrationPage {
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public void sendKeys(WebElement locator, String text) {
 		wait.until(ExpectedConditions.visibilityOf(locator)).sendKeys(text);
 	}
-
-
 }

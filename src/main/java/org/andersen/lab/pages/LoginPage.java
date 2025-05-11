@@ -1,6 +1,10 @@
 package org.andersen.lab.pages;
 
+import io.qameta.allure.Step;
 import org.andersen.lab.utils.links.Links;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +18,7 @@ import java.time.Duration;
 public class LoginPage {
 	private WebDriver driver;
 	private WebDriverWait wait;
+	private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
 	public LoginPage(WebDriver driver) {
 		this.driver = driver;
@@ -36,12 +41,16 @@ public class LoginPage {
 	@FindBy(xpath = "//span[text()='Required']")
 	private WebElement requiredFieldErrorMessage;
 
+	@Step("Opening Login Page")
 	public LoginPage openLoginPage() {
+		logger.info("Navigating to login page: " + Links.ANDERSEN_LOGIN.getLink());
 		driver.get(Links.ANDERSEN_LOGIN.getLink());
 		return this;
 	}
 
+	@Step("Setting Email address")
 	public LoginPage setEmail(String value) {
+		logger.debug("Entering email: " + value);
 		sendKeys(email, value);
 		return this;
 	}
@@ -50,16 +59,20 @@ public class LoginPage {
 		wait.until(ExpectedConditions.visibilityOf(locator)).sendKeys(text);
 	}
 
+	@Step("Clicking on Sign In button")
 	public LoginPage clickOnSignInButton() {
+		logger.info("Clicking on the Sign In button");
 		wait.until(ExpectedConditions.visibilityOf(signInButton)).click();
 		return this;
 	}
 
+	@Step("Setting user's password")
 	public LoginPage setPassword(String value) {
 		sendKeys(password, value);
 		return this;
 	}
 
+	@Step("Checking for Error Message")
 	public LoginPage checkInvalidEmailOrPasswordErrorMessage() {
 		String expectedAlertMessage = "Email or password is not valid";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(invalidEmailOrPasswordErrorMessage)).getText();
@@ -67,6 +80,7 @@ public class LoginPage {
 		return this;
 	}
 
+	@Step("Checking for an Error Message")
 	public LoginPage checkRequiredFieldErrorMessage() {
 		String expectedAlertMessage = "Required";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(requiredFieldErrorMessage)).getText();
