@@ -68,6 +68,7 @@ public class LoginPage {
 
 	@Step("Setting user's password")
 	public LoginPage setPassword(String value) {
+		logger.debug("Entering password: " + value);
 		sendKeys(password, value);
 		return this;
 	}
@@ -76,6 +77,7 @@ public class LoginPage {
 	public LoginPage checkInvalidEmailOrPasswordErrorMessage() {
 		String expectedAlertMessage = "Email or password is not valid";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(invalidEmailOrPasswordErrorMessage)).getText();
+		logger.info("Checking invalid login message: expected '{}', got '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}
@@ -84,6 +86,7 @@ public class LoginPage {
 	public LoginPage checkRequiredFieldErrorMessage() {
 		String expectedAlertMessage = "Required";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(requiredFieldErrorMessage)).getText();
+		logger.info("Validating 'Required' message: expected '{}', actual '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}

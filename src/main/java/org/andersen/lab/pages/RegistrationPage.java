@@ -2,7 +2,8 @@ package org.andersen.lab.pages;
 
 import io.qameta.allure.Step;
 import org.andersen.lab.utils.links.Links;
-import org.openqa.selenium.By;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,6 +25,7 @@ public class RegistrationPage {
 
 	private static WebDriver driver;
 	private static WebDriverWait wait;
+	private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
 	@FindBy(name = "email")
 	private WebElement email;
@@ -60,48 +62,56 @@ public class RegistrationPage {
 
 	@Step("Opening Registration Page")
 	public RegistrationPage openRegistrationPage() {
+		logger.info("Navigating to registration page: " + Links.ANDERSEN_REGISTRATION.getLink());
 		driver.get(Links.ANDERSEN_REGISTRATION.getLink());
 		return this;
 	}
 
 	@Step("Setting user's password")
 	public RegistrationPage setPassword(String value) {
+		logger.debug("Entering password: " + value);
 		sendKeys(password, value);
 		return this;
 	}
 
 	@Step("Setting user's email address")
 	public RegistrationPage setEmail(String value) {
+		logger.debug("Entering email: " + value);
 		sendKeys(email, value);
 		return this;
 	}
 
 	@Step("Setting user's confirmation password")
 	public RegistrationPage setConfirmationPassword(String value) {
+		logger.debug("Entering confirmation password: " + value);
 		sendKeys(passwordConfirmation, value);
 		return this;
 	}
 
 	@Step("Setting user's first name")
 	public RegistrationPage setFirstName(String value) {
+		logger.debug("Entering user's first name: " + value);
 		sendKeys(firstName, value);
 		return this;
 	}
 
 	@Step("Setting user's last name")
 	public RegistrationPage setLastName(String value) {
+		logger.debug("Entering user's last name: " + value);
 		sendKeys(lastName, value);
 		return this;
 	}
 
 	@Step("Setting user's date of birth")
 	public RegistrationPage setDateOfBirth(String value) {
+		logger.debug("Entering user's date of birth: " + value);
 		sendKeys(dateOfBirth, value);
 		return this;
 	}
 
 	@Step("Clicking on submit button")
 	public RegistrationPage clickOnSubmitButton() {
+		logger.info("Clicking on submit button");
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click();", submitButton);
 		return this;
@@ -111,6 +121,7 @@ public class RegistrationPage {
 	public RegistrationPage checkRequiredFieldErrorMessage() {
 		String expectedAlertMessage = "Required";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(requiredFieldErrorMessage)).getText();
+		logger.info("Validating 'Required field' message: expected '{}', actual '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}
@@ -119,6 +130,7 @@ public class RegistrationPage {
 	public RegistrationPage checkInvalidEmailErrorMessage() {
 		String expectedAlertMessage = "Invalid email address";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(invalidEmailErrorMessage)).getText();
+		logger.info("Validating 'Invalid email format' message: expected '{}', actual '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}
@@ -127,6 +139,7 @@ public class RegistrationPage {
 	public RegistrationPage checkMismatchedPasswordsErrorMessage() {
 		String expectedAlertMessage = "Passwords must match";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(mismatchedPasswordsErrorMessage)).getText();
+		logger.info("Validating 'Mismatched passwords' message: expected '{}', actual '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}
@@ -135,11 +148,11 @@ public class RegistrationPage {
 	public RegistrationPage checkRegisteredEmailErrorMessage() {
 		String expectedAlertMessage = "This email address is already in use";
 		String actualAlertMessage = wait.until(ExpectedConditions.visibilityOf(registeredEmailErrorMessage)).getText();
+		logger.info("Validating 'Existing email address' message: expected '{}', actual '{}'", expectedAlertMessage, actualAlertMessage);
 		Assert.assertEquals(actualAlertMessage, expectedAlertMessage, "Error message is incorrect...");
 		return this;
 	}
 
-	@Step("Checking for an Error Message")
 	public void sendKeys(WebElement locator, String text) {
 		wait.until(ExpectedConditions.visibilityOf(locator)).sendKeys(text);
 	}

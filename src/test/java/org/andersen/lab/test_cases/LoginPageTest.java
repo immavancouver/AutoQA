@@ -1,16 +1,12 @@
 package org.andersen.lab.test_cases;
 
 import io.qameta.allure.*;
-
 import org.andersen.lab.pages.LoginPage;
-
 import org.andersen.lab.utils.driver.DriverSetUp;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import org.testng.annotations.*;
 
 
@@ -24,7 +20,7 @@ public class LoginPageTest {
 
 	@BeforeClass
 	public void setUp() {
-		logger.info("Setting up driver and page objects...");
+		logger.info("Initializing WebDriver and LoginPage object...");
 		driver = DriverSetUp.getDriver();
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		loginPage = new LoginPage(driver);

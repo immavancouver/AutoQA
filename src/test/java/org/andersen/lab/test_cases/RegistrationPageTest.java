@@ -62,6 +62,7 @@ public class RegistrationPageTest {
 	@Story("US 2.2")
 	@Test
 	public void registrationWithMissingFields() {
+		logger.info("Test: registrationWithMissingFields - Registering with missing fields");
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("")
@@ -77,6 +78,7 @@ public class RegistrationPageTest {
 	@Story("US 2.3")
 	@Test
 	public void registrationWithInvalidEmail() {
+		logger.info("Test: registrationWithInvalidEmail - Registering with invalid email address");
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
@@ -94,6 +96,7 @@ public class RegistrationPageTest {
 	@Story("US 2.4")
 	@Test
 	public void registrationWithMismatchedPasswords() {
+		logger.info("Test: registrationWithMismatchedPasswords - Registering with mismatched passwords");
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
@@ -111,6 +114,7 @@ public class RegistrationPageTest {
 	@Story("US 2.5")
 	@Test
 	public void registrationWithRegisteredEmail() {
+		logger.info("Test: registrationWithRegisteredEmail - Registering with existing email address");
 		registrationPage
 				.openRegistrationPage()
 				.setFirstName("John")
