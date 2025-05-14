@@ -2,7 +2,6 @@ package org.andersen.lab.pages;
 
 import io.qameta.allure.Step;
 import org.andersen.lab.utils.links.Links;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
