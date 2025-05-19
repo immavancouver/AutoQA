@@ -1,6 +1,5 @@
 package org.andersen.lab.pages;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -16,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static io.appium.java_client.AppiumBy.androidUIAutomator;
 import static org.andersen.lab.constants.PageElements.DATE_WIDGETS_OPTIONS;
 import static org.andersen.lab.constants.PageElements.VIEWS_OPTION;
 
@@ -29,17 +29,21 @@ public class ViewsPage {
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
-	public void openDateWidgets() {
+	public DateWidgetsPage openDateWidgets() {
 		wait.until(ExpectedConditions
 				.elementToBeClickable(DATE_WIDGETS_OPTIONS)).click();
+
+		return new DateWidgetsPage(driver);
 	}
 
-	public void scrollUntilTextSwitcher() {
-		WebElement element = driver.findElement(AppiumBy.androidUIAutomator(
+	public TextSwitcherPage openTextSwitcherPage() {
+		WebElement element = driver.findElement(androidUIAutomator(
 				"new UiScrollable(new UiSelector().scrollable(true))" +
 						".scrollIntoView(new UiSelector().text(\"TextSwitcher\"))"));
 
 		element.click();
+
+		return new TextSwitcherPage(driver);
 	}
 
 	public int getViewsItemCountWithScroll() {
@@ -78,8 +82,7 @@ public class ViewsPage {
 			}
 
 		} while (attempts < MAX_ATTEMPTS && titles.size() < 42);
-
-		System.out.println("Total Views items found: " + titles.size());
+		
 		return titles.size();
 	}
 
@@ -98,4 +101,5 @@ public class ViewsPage {
 
 		driver.perform(Collections.singletonList(scroll));
 	}
+
 }

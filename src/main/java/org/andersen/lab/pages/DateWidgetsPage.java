@@ -18,6 +18,7 @@ import java.util.Locale;
 import static org.andersen.lab.constants.PageElements.AM_PM_PICKER;
 import static org.andersen.lab.constants.PageElements.CHANGE_DATE_BTN;
 import static org.andersen.lab.constants.PageElements.CHANGE_TIME_BTN;
+import static org.andersen.lab.constants.PageElements.DATE_DISPLAY;
 import static org.andersen.lab.constants.PageElements.DATE_PICKER;
 import static org.andersen.lab.constants.PageElements.DIALOG_OPTION;
 import static org.andersen.lab.constants.PageElements.HOUR_PICKER;
@@ -25,6 +26,9 @@ import static org.andersen.lab.constants.PageElements.MINUTE_PICKER;
 import static org.andersen.lab.constants.PageElements.MONTH_YEAR_HEADER;
 import static org.andersen.lab.constants.PageElements.NEXT_MONTH_BTN;
 import static org.andersen.lab.constants.PageElements.OK_BTN;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class DateWidgetsPage {
 
@@ -37,7 +41,8 @@ public class DateWidgetsPage {
 	}
 
 	public void openDialog() {
-		wait.until(ExpectedConditions.elementToBeClickable(DIALOG_OPTION)).click();
+		wait.until(elementToBeClickable(DIALOG_OPTION))
+				.click();
 	}
 
 	public void setTomorrowDateAndTime() {
@@ -46,8 +51,8 @@ public class DateWidgetsPage {
 	}
 
 	private void setTomorrowDate() {
-		wait.until(ExpectedConditions.elementToBeClickable(CHANGE_DATE_BTN)).click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(DATE_PICKER));
+		wait.until(elementToBeClickable(CHANGE_DATE_BTN)).click();
+		wait.until(presenceOfElementLocated(DATE_PICKER));
 
 		LocalDate tomorrow = LocalDate.now().plusDays(1);
 		int tomorrowDay = tomorrow.getDayOfMonth();
@@ -58,12 +63,8 @@ public class DateWidgetsPage {
 		final int MAX_ATTEMPTS = 24;
 
 		while (attempts < MAX_ATTEMPTS) {
-			String currentHeaderText = wait.until(ExpectedConditions
-					.visibilityOfElementLocated(MONTH_YEAR_HEADER)).getText();
-
-			System.out.println("Current header: '" + currentHeaderText + "'");
-			System.out.println("Looking for: '" + tomorrowMonth + " " + tomorrowYear +
-					"' or year '" + tomorrowYear + "'");
+			String currentHeaderText = wait.until(visibilityOfElementLocated(MONTH_YEAR_HEADER))
+					.getText();
 
 			if (currentHeaderText.equals(String.valueOf(tomorrowYear))) {
 
@@ -77,7 +78,8 @@ public class DateWidgetsPage {
 				break;
 			}
 
-			wait.until(ExpectedConditions.elementToBeClickable(NEXT_MONTH_BTN)).click();
+			wait.until(elementToBeClickable(NEXT_MONTH_BTN))
+					.click();
 
 			attempts++;
 			waitFor(500);
@@ -89,9 +91,9 @@ public class DateWidgetsPage {
 
 		By dayLocator = AppiumBy.xpath(String.format("//android.view.View[@text='%d']", tomorrowDay));
 
-		wait.until(ExpectedConditions.elementToBeClickable(dayLocator)).click();
+		wait.until(elementToBeClickable(dayLocator)).click();
 
-		wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+		wait.until(elementToBeClickable(OK_BTN)).click();
 	}
 
 
@@ -104,21 +106,24 @@ public class DateWidgetsPage {
 			String contentDesc = selectedDay.getAttribute("content-desc");
 			System.out.println("Selected day info: " + contentDesc);
 
-			if (contentDesc != null) {
-				for (String word : contentDesc.split(" ")) {
-					if (word.equalsIgnoreCase(targetMonth)) {
-						return true;
-					}
+			if (contentDesc == null) {
+				return false;
+			}
+
+			for (String word : contentDesc.split(" ")) {
+				if (word.equalsIgnoreCase(targetMonth)) {
+					return true;
 				}
 			}
 		} catch (Exception e) {
 			System.out.println("Could not verify month: " + e.getMessage());
 		}
+
 		return false;
 	}
 
 	public void setSpecificTime(int hour, int minute) {
-		wait.until(ExpectedConditions.elementToBeClickable(CHANGE_TIME_BTN)).click();
+		wait.until(elementToBeClickable(CHANGE_TIME_BTN)).click();
 
 		setNumberPickerValue(HOUR_PICKER, hour % 12 == 0 ? 12 : hour % 12);
 
@@ -127,11 +132,11 @@ public class DateWidgetsPage {
 		String amPm = hour < 12 ? "AM" : "PM";
 		setNumberPickerValue(AM_PM_PICKER, amPm);
 
-		wait.until(ExpectedConditions.elementToBeClickable(OK_BTN)).click();
+		wait.until(elementToBeClickable(OK_BTN)).click();
 	}
 
 	private void setNumberPickerValue(By pickerLocator, Object value) {
-		WebElement picker = wait.until(ExpectedConditions.presenceOfElementLocated(pickerLocator));
+		WebElement picker = wait.until(presenceOfElementLocated(pickerLocator));
 		WebElement input = picker.findElement(AppiumBy.id("android:id/numberpicker_input"));
 
 		input.click();
@@ -140,9 +145,13 @@ public class DateWidgetsPage {
 
 		try {
 			((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
-		} catch (Exception e) {
+		} catch (Exception exc) {
 
 		}
+	}
+
+	public String getDisplayedDateTime() {
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(DATE_DISPLAY)).getText();
 	}
 
 	private void waitFor(int millis) {
@@ -152,4 +161,5 @@ public class DateWidgetsPage {
 			Thread.currentThread().interrupt();
 		}
 	}
+
 }

@@ -2,9 +2,9 @@
 <suite name="AllTests Suite">
     <test name="AllTests">
         <classes>
-            <class name="org.andersen.lab.api.demos.tests.ViewsPageTest"/>
             <class name="org.andersen.lab.api.demos.tests.DateWidgetsPageTest"/>
             <class name="org.andersen.lab.api.demos.tests.TextSwitcherPageTest"/>
+            <class name="org.andersen.lab.api.demos.tests.ViewsPageTest"/>
         </classes>
     </test>
 </suite>

@@ -1,12 +1,12 @@
 package org.andersen.lab.pages;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 import static org.andersen.lab.constants.PageElements.VIEWS;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public class ApiDemosMainPage {
 
@@ -18,7 +18,11 @@ public class ApiDemosMainPage {
 		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
-	public void openViews() {
-		wait.until(ExpectedConditions.visibilityOfElementLocated(VIEWS)).click();
+	public ViewsPage openViewsPage() {
+		wait.until(visibilityOfElementLocated(VIEWS))
+				.click();
+
+		return new ViewsPage(driver);
 	}
+
 }

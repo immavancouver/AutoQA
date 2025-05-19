@@ -3,12 +3,11 @@ package org.andersen.lab.api.demos.tests;
 import io.appium.java_client.AppiumDriver;
 import org.andersen.lab.pages.ApiDemosMainPage;
 import org.andersen.lab.pages.TextSwitcherPage;
-import org.andersen.lab.pages.ViewsPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import util.DriverManager;
+import util.AppiumDriverFactory;
 
 public class TextSwitcherPageTest {
 
@@ -16,25 +15,16 @@ public class TextSwitcherPageTest {
 
 	private ApiDemosMainPage apiDemosMainPage;
 
-	private ViewsPage viewsPage;
-
-	private TextSwitcherPage textSwitcherPage;
-
 	@BeforeClass
 	public void setUp() {
-		driver = DriverManager.getDriver();
+		driver = AppiumDriverFactory.getInstance().getDriver();
 		apiDemosMainPage = new ApiDemosMainPage(driver);
 	}
 
 	@Test
 	public void testTextSwitcherFunctionality() {
-
-		apiDemosMainPage.openViews();
-
-		viewsPage = new ViewsPage(driver);
-		viewsPage.scrollUntilTextSwitcher();
-
-		textSwitcherPage = new TextSwitcherPage(driver);
+		TextSwitcherPage textSwitcherPage = apiDemosMainPage.openViewsPage()
+				.openTextSwitcherPage();
 
 		Assert.assertEquals(textSwitcherPage.getCurrentCounterValue(), 0,
 				"Initial counter value should be 0");
@@ -49,6 +39,7 @@ public class TextSwitcherPageTest {
 
 	@AfterClass
 	public void tearDown() {
-		DriverManager.quitDriver();
+		driver.quit();
 	}
+
 }
