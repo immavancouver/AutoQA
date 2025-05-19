@@ -6,18 +6,21 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
-import static io.appium.java_client.AppiumBy.androidUIAutomator;
+import static java.util.function.Predicate.not;
 import static org.andersen.lab.constants.PageElements.DATE_WIDGETS_OPTIONS;
-import static org.andersen.lab.constants.PageElements.VIEWS_OPTION;
+import static org.andersen.lab.constants.PageElements.TEXT_SWITCHER;
+import static org.openqa.selenium.By.xpath;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 
 public class ViewsPage {
 
@@ -26,67 +29,57 @@ public class ViewsPage {
 
 	public ViewsPage(AppiumDriver driver) {
 		this.driver = driver;
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 	}
 
 	public DateWidgetsPage openDateWidgets() {
-		wait.until(ExpectedConditions
-				.elementToBeClickable(DATE_WIDGETS_OPTIONS)).click();
+		wait.until(elementToBeClickable(DATE_WIDGETS_OPTIONS)).click();
 
 		return new DateWidgetsPage(driver);
 	}
 
 	public TextSwitcherPage openTextSwitcherPage() {
-		WebElement element = driver.findElement(androidUIAutomator(
-				"new UiScrollable(new UiSelector().scrollable(true))" +
-						".scrollIntoView(new UiSelector().text(\"TextSwitcher\"))"));
+		WebElement element = driver.findElement(TEXT_SWITCHER);
 
 		element.click();
 
 		return new TextSwitcherPage(driver);
 	}
 
-	public int getViewsItemCountWithScroll() {
-		Set<String> titles = new HashSet<>();
-		int previousSize = 0;
-		int attempts = 0;
-		final int MAX_ATTEMPTS = 15;
+	public int getClickableButtonsCount() {
+		Set<String> uniqueButtons = new LinkedHashSet<>();
 
-		do {
-			List<WebElement> items = wait.until(
-					ExpectedConditions.presenceOfAllElementsLocatedBy(VIEWS_OPTION)
-			);
+		boolean reachedEnd = false;
+		while (!reachedEnd) {
+			int beforeCount = uniqueButtons.size();
 
-			for (WebElement item : items) {
-				String text = item.getText();
-				if (!text.isEmpty()) {
-					titles.add(text);
-					System.out.println("Found: " + text);
-				}
-			}
+			List<String> buttons = wait.until(presenceOfAllElementsLocatedBy(
+							xpath("//android.widget.TextView[@clickable='true']")))
+					.stream()
+					.map(WebElement::getText)
+					.filter(Objects::nonNull)
+					.filter(not(String::isEmpty))
+					.toList();
 
-			if (titles.size() == previousSize) {
-				attempts++;
-			} else {
-				attempts = 0;
-			}
-			previousSize = titles.size();
+			uniqueButtons.addAll(buttons);
 
-			if (attempts < MAX_ATTEMPTS && titles.size() < 42) {
-				scrollDownW3C();
+			if (uniqueButtons.size() > beforeCount) {
+				scrollDown();
+
 				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
+					TimeUnit.SECONDS.sleep(10L);
+				} catch (InterruptedException exc) {
 					Thread.currentThread().interrupt();
 				}
+			} else {
+				reachedEnd = true;
 			}
+		}
 
-		} while (attempts < MAX_ATTEMPTS && titles.size() < 42);
-		
-		return titles.size();
+		return uniqueButtons.size();
 	}
 
-	private void scrollDownW3C() {
+	private void scrollDown() {
 		Dimension size = driver.manage().window().getSize();
 		Point start = new Point(size.width / 2, (int) (size.height * 0.8));
 		Point end = new Point(size.width / 2, (int) (size.height * 0.2));
@@ -99,7 +92,7 @@ public class ViewsPage {
 						PointerInput.Origin.viewport(), end.x, end.y))
 				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
-		driver.perform(Collections.singletonList(scroll));
+		driver.perform(List.of(scroll));
 	}
 
 }

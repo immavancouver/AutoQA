@@ -2,7 +2,6 @@ package org.andersen.lab.api.demos.tests;
 
 import io.appium.java_client.AppiumDriver;
 import org.andersen.lab.pages.ApiDemosMainPage;
-import org.andersen.lab.pages.ViewsPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -23,11 +22,10 @@ public class ViewsPageTest {
 
 	@Test
 	public void testViewsItemCount() {
-		ViewsPage viewsPage = apiDemosMainPage.openViewsPage();
+		int count = apiDemosMainPage.openViewsPage()
+						.getClickableButtonsCount();
 
-		int actualCount = viewsPage.getViewsItemCountWithScroll();
-
-		Assert.assertEquals(actualCount, 42, "Expected 42 view items");
+		Assert.assertEquals(count, 42, "Expected 42 view items");
 	}
 
 	@AfterClass
