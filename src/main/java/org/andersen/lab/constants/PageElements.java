@@ -20,7 +20,7 @@ public final class PageElements {
 	public static final By DATE_WIDGETS_OPTIONS = AppiumBy.accessibilityId("Date Widgets");
 
 	public static final By CHANGE_DATE_BTN = AppiumBy.accessibilityId("change the date");
-	public static  final By CHANGE_TIME_BTN = AppiumBy.accessibilityId("change the time (spinner)");
+	public static final By CHANGE_TIME_BTN = AppiumBy.accessibilityId("change the time (spinner)");
 	public static final By OK_BTN = AppiumBy.id("android:id/button1");
 
 	public static final By HOUR_PICKER = AppiumBy.xpath("(//android.widget.NumberPicker)[1]");

@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -62,7 +63,7 @@ public class DateWidgetsPage {
 
 			System.out.println("Current header: '" + currentHeaderText + "'");
 			System.out.println("Looking for: '" + tomorrowMonth + " " + tomorrowYear +
-					           "' or year '" + tomorrowYear + "'");
+					"' or year '" + tomorrowYear + "'");
 
 			if (currentHeaderText.equals(String.valueOf(tomorrowYear))) {
 
@@ -71,7 +72,7 @@ public class DateWidgetsPage {
 					break;
 				}
 			} else if (currentHeaderText.contains(tomorrowMonth) &&
-					   currentHeaderText.contains(String.valueOf(tomorrowYear))) {
+					currentHeaderText.contains(String.valueOf(tomorrowYear))) {
 
 				break;
 			}

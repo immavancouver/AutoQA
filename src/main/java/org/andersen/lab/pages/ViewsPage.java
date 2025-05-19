@@ -34,8 +34,8 @@ public class ViewsPage {
 				.elementToBeClickable(DATE_WIDGETS_OPTIONS)).click();
 	}
 
-	public void scrollUntilTextSwitcher(){
-		WebElement element =  driver.findElement(AppiumBy.androidUIAutomator(
+	public void scrollUntilTextSwitcher() {
+		WebElement element = driver.findElement(AppiumBy.androidUIAutomator(
 				"new UiScrollable(new UiSelector().scrollable(true))" +
 						".scrollIntoView(new UiSelector().text(\"TextSwitcher\"))"));
 
@@ -93,7 +93,7 @@ public class ViewsPage {
 				.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), start.x, start.y))
 				.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
 				.addAction(finger.createPointerMove(Duration.ofMillis(500),
-						                            PointerInput.Origin.viewport(), end.x, end.y))
+						PointerInput.Origin.viewport(), end.x, end.y))
 				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
 		driver.perform(Collections.singletonList(scroll));

@@ -9,38 +9,38 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import util.DriverManager;
 
-	public class DateWidgetsPageTest {
+public class DateWidgetsPageTest {
 
-		private AppiumDriver driver;
+	private AppiumDriver driver;
 
-		private ApiDemosMainPage apiDemosMainPage;
+	private ApiDemosMainPage apiDemosMainPage;
 
-		private ViewsPage viewsPage;
+	private ViewsPage viewsPage;
 
-		private DateWidgetsPage dateWidgetsPage;
+	private DateWidgetsPage dateWidgetsPage;
 
-		@BeforeClass
-		public void setUp() {
-			driver = DriverManager.getDriver();
-			apiDemosMainPage = new ApiDemosMainPage(driver);
-		}
-
-		@Test
-		public void testSetTomorrowDateAndTime() {
-
-			apiDemosMainPage.openViews();
-
-			viewsPage = new ViewsPage(driver);
-			viewsPage.openDateWidgets();
-
-			dateWidgetsPage = new DateWidgetsPage(driver);
-			dateWidgetsPage.openDialog();
-			dateWidgetsPage.setTomorrowDateAndTime();
-
-		}
-
-		@AfterClass
-		public void tearDown() {
-			DriverManager.quitDriver();
-		}
+	@BeforeClass
+	public void setUp() {
+		driver = DriverManager.getDriver();
+		apiDemosMainPage = new ApiDemosMainPage(driver);
 	}
+
+	@Test
+	public void testSetTomorrowDateAndTime() {
+
+		apiDemosMainPage.openViews();
+
+		viewsPage = new ViewsPage(driver);
+		viewsPage.openDateWidgets();
+
+		dateWidgetsPage = new DateWidgetsPage(driver);
+		dateWidgetsPage.openDialog();
+		dateWidgetsPage.setTomorrowDateAndTime();
+
+	}
+
+	@AfterClass
+	public void tearDown() {
+		DriverManager.quitDriver();
+	}
+}
