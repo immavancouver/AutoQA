@@ -10,10 +10,14 @@ import org.testng.annotations.Test;
 import util.DriverManager;
 
 	public class DateWidgetsPageTest {
-		AppiumDriver driver;
-		ApiDemosMainPage apiDemosMainPage;
-		ViewsPage viewsPage;
-		DateWidgetsPage dateWidgetsPage;
+
+		private AppiumDriver driver;
+
+		private ApiDemosMainPage apiDemosMainPage;
+
+		private ViewsPage viewsPage;
+
+		private DateWidgetsPage dateWidgetsPage;
 
 		@BeforeClass
 		public void setUp() {
@@ -31,7 +35,6 @@ import util.DriverManager;
 
 			dateWidgetsPage = new DateWidgetsPage(driver);
 			dateWidgetsPage.openDialog();
-
 			dateWidgetsPage.setTomorrowDateAndTime();
 
 		}

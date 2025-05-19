@@ -11,8 +11,9 @@ import util.DriverManager;
 
 public class ViewsPageTest {
 
-	AppiumDriver driver;
-	ApiDemosMainPage apiDemosMainPage;
+	private AppiumDriver driver;
+
+	private ApiDemosMainPage apiDemosMainPage;
 
 	@BeforeClass
 	public void setUp() {
@@ -25,7 +26,7 @@ public class ViewsPageTest {
 		apiDemosMainPage.openViews();
 
 		ViewsPage viewsPage = new ViewsPage(driver);
-		int actualCount = viewsPage.getViewsItemCountWithScroll(); // Теперь с прокруткой
+		int actualCount = viewsPage.getViewsItemCountWithScroll();
 
 		System.out.println("Total Views items found: " + actualCount);
 		Assert.assertEquals(actualCount, 42, "Expected 42 view items");

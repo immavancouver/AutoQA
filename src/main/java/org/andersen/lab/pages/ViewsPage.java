@@ -2,7 +2,6 @@ package org.andersen.lab.pages;
 
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
@@ -17,7 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.andersen.lab.constants.PageElements.DATE_WIDGETS_OPTIONS;
+import static org.andersen.lab.constants.PageElements.VIEWS_OPTION;
+
 public class ViewsPage {
+
 	private final AppiumDriver driver;
 	private final WebDriverWait wait;
 
@@ -26,22 +29,16 @@ public class ViewsPage {
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 	}
 
-	private final By viewOptionsLocator = AppiumBy.xpath(
-			"//android.widget.ListView/android.widget.TextView"
-	);
-
-	private final By dateWidgetsOption = AppiumBy.accessibilityId("Date Widgets");
-
-	private final By textSwitcherOption = AppiumBy.accessibilityId("TextSwitcher");
-
 	public void openDateWidgets() {
-		wait.until(ExpectedConditions.elementToBeClickable(dateWidgetsOption)).click();
+		wait.until(ExpectedConditions
+				.elementToBeClickable(DATE_WIDGETS_OPTIONS)).click();
 	}
 
 	public void scrollUntilTextSwitcher(){
 		WebElement element =  driver.findElement(AppiumBy.androidUIAutomator(
 				"new UiScrollable(new UiSelector().scrollable(true))" +
 						".scrollIntoView(new UiSelector().text(\"TextSwitcher\"))"));
+
 		element.click();
 	}
 
@@ -53,7 +50,7 @@ public class ViewsPage {
 
 		do {
 			List<WebElement> items = wait.until(
-					ExpectedConditions.presenceOfAllElementsLocatedBy(viewOptionsLocator)
+					ExpectedConditions.presenceOfAllElementsLocatedBy(VIEWS_OPTION)
 			);
 
 			for (WebElement item : items) {
@@ -74,7 +71,7 @@ public class ViewsPage {
 			if (attempts < MAX_ATTEMPTS && titles.size() < 42) {
 				scrollDownW3C();
 				try {
-					Thread.sleep(1000); // Даем время для загрузки новых элементов
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
@@ -95,7 +92,8 @@ public class ViewsPage {
 		Sequence scroll = new Sequence(finger, 0)
 				.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), start.x, start.y))
 				.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()))
-				.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), end.x, end.y))
+				.addAction(finger.createPointerMove(Duration.ofMillis(500),
+						                            PointerInput.Origin.viewport(), end.x, end.y))
 				.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
 
 		driver.perform(Collections.singletonList(scroll));

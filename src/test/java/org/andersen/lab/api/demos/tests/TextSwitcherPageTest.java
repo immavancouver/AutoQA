@@ -11,9 +11,13 @@ import org.testng.annotations.Test;
 import util.DriverManager;
 
 public class TextSwitcherPageTest {
+
 	private AppiumDriver driver;
+
 	private ApiDemosMainPage apiDemosMainPage;
+
 	private ViewsPage viewsPage;
+
 	private TextSwitcherPage textSwitcherPage;
 
 	@BeforeClass
@@ -36,6 +40,7 @@ public class TextSwitcherPageTest {
 				"Initial counter value should be 0");
 
 		int clicksCount = 5;
+
 		textSwitcherPage.clickNextButton(clicksCount);
 
 		Assert.assertEquals(textSwitcherPage.getCurrentCounterValue(), clicksCount,
